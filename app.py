@@ -51,7 +51,7 @@ import numpy as np
 
 app = Flask(__name__)
 
-mlflow.set_tracking_uri(uri="http://127.0.0.1:7000")
+mlflow.set_tracking_uri(uri="http://host.docker.internal:7000")
 model = mlflow.sklearn.load_model("models:/best_model/latest")
 # # Load the best model
 # def load_best_model():
