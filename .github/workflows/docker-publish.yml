@@ -3,8 +3,6 @@ name: CI/CD
 on:
   push:
     branches: ["master"]
-    tags:
-      - "**"
   pull_request:
     branches: ["master"]
 
@@ -45,8 +43,6 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_REPO }}
-          tags: |
-            type=ref,event=tag
 
       - name: Build and push
         uses: docker/build-push-action@v3
