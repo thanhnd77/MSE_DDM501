@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Classification Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        input[type="number"] {
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Classification Predictor</h1>
+
+    <form method="POST">
+        {% for i in range(20) %}
+        <div class="form-group">
+            <label for="feature_{{i}}">Feature {{i}}:</label>
+            <input type="number" step="any" name="feature_{{i}}" id="feature_{{i}}" required>
+        </div>
+        {% endfor %}
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if prediction is not none %}
+    <div class="result">
+        <h2>Prediction: {{ prediction.prediction }}</h2>
+        <p>Class 0 probability: {{ "%.2f"|format(prediction.probability.class0 * 100) }}%</p>
+        <p>Class 1 probability: {{ "%.2f"|format(prediction.probability.class1 * 100) }}%</p>
+    </div>
+    {% endif %}
+
+    <script>
+        // Add random sample data
+        function fillRandomData() {
+            for (let i = 0; i < 20; i++) {
+                document.getElementById(`feature_${i}`).value = (Math.random() * 2 - 1).toFixed(2);
+            }
+        }
+
+        // Add button for random data
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            const randomButton = document.createElement('button');
+            randomButton.type = 'button';
+            randomButton.className = 'button';
+            randomButton.style.marginRight = '10px';
+            randomButton.textContent = 'Fill Random Data';
+            randomButton.onclick = fillRandomData;
+
+            const submitButton = form.querySelector('button[type="submit"]');
+            submitButton.parentNode.insertBefore(randomButton, submitButton);
+        });
+    </script>
+</body>
+</html>
